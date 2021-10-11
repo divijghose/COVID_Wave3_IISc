@@ -23,6 +23,7 @@ import math
 pd.set_option('display.max_columns', 20)
 pd.set_option('display.max_rows', 20)
 %config InlineBackend.figure_format = 'retina'
+from PIL import Image
 
 ############################# Update Actual Cases #############################################3
 import requests
@@ -106,7 +107,7 @@ ActualDict["Deceased"] = actualDes
 ActualDict["Recovered"] = actualRecov
 ActualDict["Cumuliative"] = actualTot
 
-file_name = "actual_Data.pkl"
+file_name = "Data_Files/actual_Data.pkl"
 
 open_file = open(file_name, "wb")
 pickle.dump(ActualDict, open_file)
@@ -117,19 +118,19 @@ open_file.close()
 ###################################### Read Predicted and Actual Cases #########################################
 df_active = pd.read_pickle("Data_Files/df_active")
 
-with open('actual_Data.pkl', 'rb') as f: mynewlist = pickle.load(f) #actual number of active cases 
+with open('Data_Files/actual_Data.pkl', 'rb') as f: mynewlist = pickle.load(f) #actual number of active cases 
 
 
 
 ###################################### Read Ensemble Mean And Standard Errors ###################################
-with open('ensemblemean.pkl', 'rb') as f:
+with open('Data_Files/ensemblemean.pkl', 'rb') as f:
     ensemble_mean = pickle.load(f)
 
 
-with open('ensembleub.pkl', 'rb') as f:
+with open('Data_Files/ensembleub.pkl', 'rb') as f:
     ensemble_ub = pickle.load(f)
 
-with open('ensemblelb.pkl', 'rb') as f:
+with open('Data_Files/ensemblelb.pkl', 'rb') as f:
     ensemble_lb = pickle.load(f)
 
 
@@ -144,10 +145,10 @@ weightp = np.zeros(N)
 weightr = np.zeros(N)
 weightr[:] = 1.0/N
 
-with open('mse.pkl', 'rb') as f:
+with open('Data_Files/mse.pkl', 'rb') as f:
     MSE = pickle.load(f)
 
-lastDay = pd.read_pickle('day.pkl')
+lastDay = pd.read_pickle('Data_Files/day.pkl')
 latestDay = lastDay
 
 RMSE = np.zeros(N)
@@ -191,10 +192,10 @@ for i in range(731):
     weighted_lb.append(weighted_mean[i]-weighted_sem[i])
 
 ###################################### Update Input Files ###################################
-with open('mse.pkl', 'wb') as f:
+with open('Data_Files/mse.pkl', 'wb') as f:
     pickle.dump(MSE, f)
 
-with open('day.pkl','wb') as f:
+with open('Data_Files/day.pkl','wb') as f:
     pickle.dump(latestDay,f)       
         
 
@@ -230,11 +231,6 @@ plt.plot(ensemble_mean,'r-', label='Ensemble Mean')
 plt.fill_between(np.arange(731),ensemble_ub,ensemble_lb,color='r',alpha=0.4)
 plt.plot(weighted_mean,'b--',label='Posterior Mean')
 plt.fill_between(np.arange(731),weighted_ub,weighted_lb,color='b',alpha=0.4)
-# plt.plot(weightedr1_ub,'y--',label='new')
-# plt.plot(weightedr1_lb,'y--',label='new')
-# plt.plot(weighted_meanr,'b--',label='Posterior Mean, RMSE')
-
-# plt.plot(weighted_means,'m--',label='Posterior Mean, SSE')
 plt.xlim([290,730])
 plt.xticks(ticks=xt,labels=xtl)
 plt.yticks(ticks=yt,labels=ytl)
