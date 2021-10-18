@@ -22,7 +22,7 @@ import statistics
 import math 
 pd.set_option('display.max_columns', 20)
 pd.set_option('display.max_rows', 20)
-%config InlineBackend.figure_format = 'retina'
+# %config InlineBackend.figure_format = 'retina'
 from PIL import Image
 
 ############################# Update Actual Cases #############################################3
