@@ -198,7 +198,15 @@ with open('Data_Files/mse.pkl', 'wb') as f:
 with open('Data_Files/day.pkl','wb') as f:
     pickle.dump(latestDay,f)       
         
+###################################### Update Output Files ###################################
+with open('Data_Files/wm.pkl', 'wb') as f:
+    pickle.dump(weighted_mean, f)
 
+with open('Data_Files/wub.pkl','wb') as f:
+    pickle.dump(weighted_ub,f)
+
+with open('Data_Files/wlb.pkl','wb') as f:
+    pickle.dump(weighted_lb,f)
 
 
 
@@ -237,5 +245,5 @@ plt.yticks(ticks=yt,labels=ytl)
 plt.xlabel('Date')
 plt.ylabel('Number of Active Cases')
 plt.legend()
-name = "Day_" + str(latestDay)+"_.png"
+name = "Output_Files/Images/Day_" + str(latestDay)+"_.png"
 plt.savefig(name,dpi=600,bbox_inches='tight')
