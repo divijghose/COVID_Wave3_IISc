@@ -16,7 +16,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 pd.set_option('display.max_columns', 20)
-pd.set_option('display.max_rows', 20)start ="2020-07-01"
+pd.set_option('display.max_rows', 20)
+start ="2020-07-01"
 end  = "2022-06-30"
 
 start = datetime.datetime.strptime(start, "%Y-%m-%d")
