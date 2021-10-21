@@ -168,7 +168,33 @@ sum_weightr = sum(weightr)
 
 for i in range(N):
     weightr[i] = (weightr[i]/sum_weightr)*N
+
+with open('Data_Files/wpcum.pkl', 'rb') as f:
+    weightpcum = pickle.load(f)
+
+p25 = np.percentile(weightr,25)
+p50 = np.percentile(weightr,50)
+p75 = np.percentile(weightr,75)
+
+max_list = [i for i, j in enumerate(weightr) if j == max(weightr)]
+
+
+for i in range(N):
+    if(weightr[i]<p25):
+        weightp[i]=0
+    elif(p25<=weightr[i]<p50):
+        weightp[i]=0.25
+    elif(p50<=weightr[i]<p75):
+        weightp[i]=0.5
+    else:
+        weightp[i]=0.75
     
+for i in max_list:
+    weightp[i] = 1.0   
+
+weightpcum.append(weightp)
+
+
 
 df_posterior = df_active.copy(deep=True)
 df_posterior['WeightRMSE'] = weightr
@@ -191,6 +217,13 @@ for i in range(731):
     weighted_ub.append(weighted_mean[i]+weighted_sem[i])
     weighted_lb.append(weighted_mean[i]-weighted_sem[i])
 
+
+
+   
+
+
+
+
 ###################################### Update Input Files ###################################
 with open('Data_Files/mse.pkl', 'wb') as f:
     pickle.dump(MSE, f)
@@ -207,6 +240,12 @@ with open('Data_Files/wub.pkl','wb') as f:
 
 with open('Data_Files/wlb.pkl','wb') as f:
     pickle.dump(weighted_lb,f)
+
+with open('Data_Files/wr.pkl','wb') as f:
+    pickle.dump(weightr,f)
+
+with open('Data_Files/wpcum.pkl','wb') as f:
+    pickle.dump(weightpcum,f)
 
 
 
