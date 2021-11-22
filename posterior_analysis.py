@@ -170,7 +170,7 @@ for i in range(N):
     weightr[i] = (weightr[i]/sum_weightr)*N
 
 with open('Data_Files/wpcum.pkl', 'rb') as f:
-    weightpcum = pickle.load(f)
+    # weightpcum = pickle.load(f)
 
 p25 = np.percentile(weightr,25)
 p50 = np.percentile(weightr,50)
@@ -192,7 +192,7 @@ for i in range(N):
 for i in max_list:
     weightp[i] = 1.0   
 
-weightpcum.append(weightp)
+# weightpcum.append(weightp)
 
 
 
@@ -244,8 +244,8 @@ with open('Data_Files/wlb.pkl','wb') as f:
 with open('Data_Files/wr.pkl','wb') as f:
     pickle.dump(weightr,f)
 
-with open('Data_Files/wpcum.pkl','wb') as f:
-    pickle.dump(weightpcum,f)
+# with open('Data_Files/wpcum.pkl','wb') as f:
+#     pickle.dump(weightpcum,f)
 
 
 
@@ -281,6 +281,8 @@ plt.fill_between(np.arange(731),weighted_ub,weighted_lb,color='b',alpha=0.4)
 plt.xlim([290,730])
 plt.xticks(ticks=xt,labels=xtl)
 plt.yticks(ticks=yt,labels=ytl)
+
+
 plt.xlabel('Date')
 plt.ylabel('Number of Active Cases')
 plt.legend()
